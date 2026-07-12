@@ -3,8 +3,8 @@ import pandas as pd
 import joblib
 
 # تحميل الموديل والـ Scaler
-model = joblib.load('kmeans_model.pkl')
-scaler = joblib.load('scaler.pkl')
+model = joblib.load('kmeans_clustering_model.pkl')
+scaler = joblib.load('scaler_for_clustering.pkl')
 
 st.title("🚛 Trip Clustering Predictor")
 st.write("Enter the trip details to find out which category (Cluster) it belongs to")
