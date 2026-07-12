@@ -8,9 +8,9 @@ st.title("🚛 Logistics Analytics Dashboard")
 st.write("Professional AI-powered tools for supply chain operations.")
 
 # تأكد أن هذه الملفات موجودة في نفس مجلد السكريبت
-kmeans_model = joblib.load('kmeans_model.pkl')
-scaler = joblib.load('scaler.pkl')
-driver_model = joblib.load('effeciency.pkl') # تأكد من اسم الملف الصحيح هنا
+kmeans_model = joblib.load('kmeans_clustering_model.pkl')
+scaler = joblib.load('scaler_for_clustering.pkl')
+driver_model = joblib.load('effeciency.pkl')
 
 tab1, tab2 = st.tabs(["Trip Segmentation (Clustering)", "Driver Efficiency Prediction"])
 
