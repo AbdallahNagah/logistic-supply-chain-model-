@@ -27,4 +27,4 @@ if st.button("Category expectation"):
         1: "Very long distance flights",
         2: "Heavy transport trips"
     }
-    st.success(f"This trip is affiliated with: {categories[prediction]}"))
+    st.success(f"This trip is affiliated with: {categories[prediction]}")
