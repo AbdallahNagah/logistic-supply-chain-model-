@@ -2,12 +2,14 @@ import streamlit as st
 import pandas as pd
 import joblib
 
+# إعداد الصفحة
 st.set_page_config(page_title="Logistics AI Dashboard", layout="wide")
 
 st.title("🚛 Logistics Analytics Dashboard")
 st.write("Professional AI-powered tools for supply chain operations.")
 
-# تأكد أن هذه الملفات موجودة في نفس مجلد السكريبت
+# تحميل النماذج
+# تأكد أن هذه الملفات في نفس المسار
 kmeans_model = joblib.load('kmeans_clustering_model.pkl')
 scaler = joblib.load('scaler_for_clustering.pkl')
 driver_model = joblib.load('Efficiency.pkl')
@@ -51,8 +53,9 @@ with tab2:
         trips_r = st.number_input("Total Trips Count", value=20, key="trips_r")
         
     if st.button("Predict Efficiency"):
+        # تعديل أسماء الأعمدة لتطابق المدخلات (تأكد أن 'total_trips' هو نفس الاسم المستخدم أثناء تدريب النموذج)
         data_r = pd.DataFrame([[dist_r, dur_r, weight_r, trips_r]], 
-                            columns=['actual_distance_miles', 'actual_duration_hours', 'weight_lbs', 'trip_id'])
+                            columns=['actual_distance_miles', 'actual_duration_hours', 'weight_lbs', 'total_trips'])
         
         prediction_r = driver_model.predict(data_r)
         st.metric("Predicted Efficiency (MPG)", f"{prediction_r[0]:.2f}")
