@@ -7,10 +7,10 @@ st.set_page_config(page_title="Logistics AI Dashboard", layout="wide")
 st.title("🚛 Logistics Analytics Dashboard")
 st.write("Professional AI-powered tools for supply chain operations.")
 
-# تحميل النماذج (تم تصحيح اسم ملف الـ scaler)
-kmeans_model = joblib.load('kmeans_clustering_model.pkl')
-scaler = joblib.load('scaler_for_clustering.pkl') 
-Efficiency_model = joblib.load('Efficiency.pkl')
+
+kmeans_model = joblib.load('kmeans.pkl')
+scaler = joblib.load('scaler_for_clustering.pkl')
+driver_model = joblib.load('Efficiency.pkl')
 
 tab1, tab2 = st.tabs(["Trip Segmentation (Clustering)", "Driver Efficiency Prediction"])
 
@@ -40,24 +40,27 @@ with tab1:
 
 with tab2:
     st.header("Driver Efficiency Predictor")
-    
+    st.write("Predict estimated MPG based on input metrics.")
     
     col1, col2 = st.columns(2)
     with col1:
-        driver_id = st.number_input("Driver ID", value=1)
-        month = st.number_input("Month", value=1)
-        dist_r = st.number_input("Actual Distance (Miles)", value=500.0, key="dist_r")
-        dur_r = st.number_input("Actual Duration (Hours)", value=10.0, key="dur_r")
+        dist_r = st.number_input("Total Monthly Miles", value=5000, key="dist_r")
+        dur_r = st.number_input("Total Monthly Hours", value=150, key="dur_r")
     with col2:
-        fuel = st.number_input("Fuel Gallons Used", value=50.0)
-        weight_r = st.number_input("Weight (Lbs)", value=20000.0, key="weight_r")
-        trip_id = st.number_input("Trip ID", value=100)
-        avg_speed = st.number_input("Average Speed", value=50.0)
+        weight_r = st.number_input("Average Load Weight", value=20000, key="weight_r")
+        trips_r = st.number_input("Total Trips Count", value=20, key="trips_r")
         
     if st.button("Predict Efficiency"):
+       
+        data_r = pd.DataFrame([[dist_r, dur_r, weight_r, trips_r]], 
+                            columns=['actual_distance_miles', 'actual_duration_hours', 'weight_lbs', 'trip_id'])
         
-        data_r = pd.DataFrame([[driver_id, month, dist_r, dur_r, fuel, weight_r, trip_id, avg_speed]], 
-                            columns=['driver_id', 'month', 'actual_distance_miles', 'actual_duration_hours', 'fuel_gallons_used', 'weight_lbs', 'trip_id', 'avg_speed'])
         
-        prediction_r = Efficiency_model.predict(data_r)
-        st.metric("Predicted Efficiency (MPG)", f"{prediction_r[0]:.2f}")
+        predicted_fuel = driver_model.predict(data_r)[0]
+        
+        
+        if predicted_fuel > 0:
+            mpg = dist_r / predicted_fuel
+            st.metric("Predicted Efficiency (MPG)", f"{mpg:.2f}")
+        else:
+            st.error("Could not calculate efficiency (fuel prediction was invalid).")
