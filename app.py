@@ -9,7 +9,7 @@ st.write("Professional AI-powered tools for supply chain operations.")
 
 
 kmeans_model = joblib.load('kmeans.pkl')
-scaler = joblib.load('scaler.pkl')
+scaler = joblib.load('scaler_for_clustering.pkl')
 driver_model = joblib.load('Efficiency.pkl')
 
 tab1, tab2 = st.tabs(["Trip Segmentation (Clustering)", "Driver Efficiency Prediction"])
