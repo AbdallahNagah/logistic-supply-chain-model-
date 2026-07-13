@@ -10,7 +10,7 @@ st.write("Professional AI-powered tools for supply chain operations.")
 # تأكد أن هذه الملفات موجودة في نفس مجلد السكريبت
 kmeans_model = joblib.load('kmeans_clustering_model.pkl')
 scaler = joblib.load('kmeans_clustering_model.pkl')
-driver_model = joblib.load('Efficiency.pkl') # تأكد من اسم الملف الصحيح هنا
+Efficiency_model = joblib.load('Efficiency.pkl') # تأكد من اسم الملف الصحيح هنا
 
 tab1, tab2 = st.tabs(["Trip Segmentation (Clustering)", "Driver Efficiency Prediction"])
 
@@ -54,5 +54,5 @@ with tab2:
         data_r = pd.DataFrame([[dist_r, dur_r, weight_r, trips_r]], 
                             columns=['actual_distance_miles', 'actual_duration_hours', 'weight_lbs', 'trip_id'])
         
-        prediction_r = driver_model.predict(data_r)
+        prediction_r = Efficiency_model.predict(data_r)
         st.metric("Predicted Efficiency (MPG)", f"{prediction_r[0]:.2f}")
