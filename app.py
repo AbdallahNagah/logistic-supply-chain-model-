@@ -4,7 +4,7 @@ import joblib
 
 st.set_page_config(page_title="Logistics AI Dashboard", layout="wide")
 
-st.title("🚛 Logistics Analytics Dashboard")
+st.title("🚛 Logistics Decision Intelligence")
 st.write("Professional AI-powered tools for supply chain operations.")
 
 
